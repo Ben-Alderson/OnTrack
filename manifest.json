@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+
+  "name": "On Track",
+  "description": "Helps manage time by informing the user when they are being unproductive.",
+  "version": "0.1.0",
+
+  "icons": {
+	"128": "icons/icon_128.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/icon_128.png",
+    "default_title": "On Track"
+  },
+  "background": {
+    "scripts": ["background-script.js"]
+  },
+  "content_scripts": [{
+    "matches": ["https://*/*", "http://*/*"],
+    "js": ["content-script.js"]
+  }],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "alarms"
+  ]
+}
