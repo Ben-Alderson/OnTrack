@@ -33,24 +33,38 @@ chrome.storage.sync.get("config", function(new_config) {
 	})
 })
 
+// The list of things to do
+todos = []
+
+// Load the todos
+chrome.storage.sync.get("todos", function(new_todos) {
+	todos = Object.assign(todos, new_todos.todos)
+
+	// Send the update if anyone has connected early
+	allPorts.forEach((p) => {
+		p.postMessage({action: "todosChanged", newtodos: todos })
+	})
+})
+
 // We'll listen for activity from connected pages, and send updates back to those pages
 chrome.runtime.onConnect.addListener((port) => {
 	allPorts.push(port)
 
 	// Send some initial messages to inform the newly connected port of the current plugin state
 	port.postMessage({action: "configChanged", newConfig: config})
+	port.postMessage({action: "todosChanged", newTodos: todos})
 	port.postMessage({action: "blockingChanged", value: isBlocking})
 
 	port.onMessage.addListener((message) => {
 		switch(message.action) {
 			case "updateConfig":
 				// Overwrite the config values with the new config values
-				config = Object.assign(config, message.changes)
+				config = message.changes
 				chrome.storage.sync.set({config: config}) 
 
 				// Send the update to all listeners
 				allPorts.forEach((p) => {
-					p.postMessage({action: "configChanged", newConfig: config })
+					p.postMessage({action: "configChanged", newConfig: config})
 				})
 				break
 
@@ -68,6 +82,23 @@ chrome.runtime.onConnect.addListener((port) => {
 
 				isBlocking = message.value
 
+				break
+
+			case "updateTodos":
+				// Overwrite the config values with the new config values
+				todos = message.changes
+				chrome.storage.sync.set({todos: todos}) 
+
+				// Send the update to all listeners
+				allPorts.forEach((p) => {
+					p.postMessage({action: "todosChanged", newTodos: todos})
+				})
+				break
+
+			case "openTodos":
+				chrome.tabs.create({
+					url: "config_page/index.html",
+				})
 				break
 		}
 	})
@@ -107,7 +138,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 		})
 	}
 
-	// TODO: Stop blocking after the task is completed
 	let shouldStopBlocking = false
 	if(shouldStopBlocking && isBlocking) {
 		isBlocking = false
