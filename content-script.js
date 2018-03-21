@@ -26,18 +26,21 @@ function checkBlocking() {
 		blocking_el.style["left"] = 0
 		blocking_el.style["height"] = "100vh"
 		blocking_el.style["width"] = "100vw"
-		blocking_el.style["background"] = "rgba(0.0, 0.0, 0.0, 0.5)"
+		blocking_el.style["background-color"] = "rgba(0, 0, 0, 0.5)"
 		blocking_el.style["z-index"] = 10000
 		
 		message = document.createElement("a")
 		message.href = chrome.runtime.getURL("config_page/index.html")
-		message.addEventListener("click", () => { port.postMessage({action: "openTodos"}) });
+		message.addEventListener("click", (e) => {
+			e.preventDefault()
+			port.postMessage({action: "openTodos"})
+		})
 		message.appendChild(document.createTextNode("You have " + num_todos + " todo items."))
 		message.style["position"] = "fixed"
 		message.style["transform"] = "translate(-50%, -50%)"
 		message.style["left"] = "50%"
 		message.style["top"] = "50%"
-		message.style["background"] = "white"
+		message.style["background-color"] = "white"
 		message.style["border-radius"] = "10px"
 		message.style["padding"] = "1em"
 		message.style["font-size"] = "1em"
