@@ -43,7 +43,9 @@ function checkBlocking() {
 		blocking_el.appendChild(popup)
 
 		var minutes_el = document.createElement("span")
-		minutes_el.innerHTML = "You have been active for " + minutes + " minutes."
+        var minutsString=minutes.toString()
+        minutsString = minutsString.fontcolor("red");
+		minutes_el.innerHTML = "You have been active for " + minutsString + " minutes."
 		popup.appendChild(minutes_el)
 		popup.appendChild(document.createElement("br"))
 
@@ -125,13 +127,11 @@ function onActivity() {
 
 	if(!document.hasFocus()) {
 		// Don't log events where the user is just hovering over the window.
-	} else if(!isOnBlockList()) {
-		// Don't send messages if we aren't a distracting site
 	} else if(isBlocking) {
 		// Don't send messages while blocking is active
 	} else {
-		// Send activity notification if we're blocked
-		port.postMessage({action: "pageActivity"})
+		// Send activity notification regardless of if we're blocking while unblocked
+		port.postMessage({action: "pageActivity", website: window.location.hostname})
 	}
 	
 	// Wait 1 second before sending another activity event
