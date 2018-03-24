@@ -76,6 +76,7 @@ port.onMessage.addListener((message) => {
 
 function addTodoItem(value) {
 	todos.push(document.querySelector("#task-newitem").value);
+    document.getElementById("task-newitem").value="";
 	port.postMessage({ action: "updateTodos", changes: todos });
 }
 
@@ -87,6 +88,7 @@ function removeTodoItem(item_id) {
 
 function addWebsiteItem(value) {
 	config.blockList.push(document.querySelector("#website-newitem").value);
+    document.getElementById("website-newitem").value="";
 	port.postMessage({ action: "updateConfig", changes: config });
 }
 
