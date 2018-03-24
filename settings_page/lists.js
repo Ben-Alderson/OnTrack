@@ -66,6 +66,11 @@ port.onMessage.addListener((message) => {
 			} else {
 				document.querySelector("#idle").checked = false
 			}
+			break
+
+		case "activityFor":
+			document.querySelector("#TimeUsed").value = message.time;
+			break
 	}
 })
 
