@@ -40,9 +40,11 @@ body{
 				
 			}
 
-
-table{
+body{
 	font-size: 16px;
+}
+table{
+	
 	border-collapse: collapse;
 	border-style:solid;
 	background: linear-gradient(to bottom, #D3D9EA, white);
