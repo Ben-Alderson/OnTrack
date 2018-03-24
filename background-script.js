@@ -77,11 +77,19 @@ chrome.runtime.onConnect.addListener((port) => {
 			case "resetActiveTime":
 				hasBeenActive = false
 				remindTimer = 0
+				allPorts.forEach((p) => {
+					p.postMessage({action: "activityFor", time: remindTimer});
+				})
 				break
 
 			case "changeState":
 				if(state != message.value) {
 					state = message.value
+					hasBeenActive = false
+					remindTimer = 0
+					allPorts.forEach((p) => {
+						p.postMessage({action: "activityFor", time: remindTimer});
+					})
 					allPorts.forEach((p) => {
 						p.postMessage({action: "stateChanged", value: state})
 					})
