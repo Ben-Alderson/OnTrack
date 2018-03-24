@@ -43,7 +43,9 @@ function checkBlocking() {
 		blocking_el.appendChild(popup)
 
 		var minutes_el = document.createElement("span")
-		minutes_el.innerHTML = "You have been active for " + minutes + " minutes."
+        var minutsString=minutes.toString()
+        minutsString = minutsString.fontcolor("red");
+		minutes_el.innerHTML = "You have been active for " + minutsString + " minutes."
 		popup.appendChild(minutes_el)
 		popup.appendChild(document.createElement("br"))
 
