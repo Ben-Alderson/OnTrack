@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>OnTrack Configuration</title>
+		<style>
+			/* Style the tab */
+			.tab {
+					overflow: hidden;
+					border: 1px solid #ccc;
+					background-color: #f1f1f1;
+			}
+			/* Style the buttons inside the tab */
+			.tab button {
+					background-color: inherit;
+					float: left;
+					border: none;
+					outline: none;
+					cursor: pointer;
+					padding: 14px 16px;
+					transition: 0.3s;
+					font-size: 17px;
+			}
+			/* Change background color of buttons on hover */
+			.tab button:hover {
+					background-color: #ddd;
+			}
+			/* Create an active/current tablink class */
+			.tab button.active {
+					background-color: #ccc;
+			}
+			/* Style the tab content */
+			.tabcontent {
+					display: none;
+					padding: 6px 12px;
+					border: 1px solid #ccc;
+					border-top: none;
+			}
+            
+            * {
+                box-sizing: border-box;
+            }
+
+            .imageColumn {
+                float: left;
+                width: 0%;
+                padding: 0px;
+            }
+
+            .imageRow::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+		</style>
+		<link rel="shortcut icon" href="../icons/icon_128.png">
+		<script src="lists.js" defer></script>
+		<script src="tabs.js" defer></script>
+	</head>
+
+	<body>
+        <div class="imageRow">
+            <div class="imageColumn">
+                <img src="logoExtension.jpg" alt="On Track Logo" style="width:1000000px;height:67px;">
+            </div>
+            <div class="imageColumn">
+                <img src="logo.jpg" alt="On Track Logo">
+            </div>
+        </div>
+        <h3><a href="mainPage.html">To-Do's</a></h3>
+		<h1>Settings</h1>
+
+		<input type="checkbox" id="idle">Idle Mode</input>
+
+		<!--The main menu-->
+
+		<div class="tab">
+				<button class="tablinks" data-tabid="Tasks" id="defaultOpen">Tasks</button>
+				<button class="tablinks" data-tabid="Websites">Websites</button>
+				<button class="tablinks" data-tabid="Reminders">Reminders</button>
+		</div>
+
+		<div id="Tasks" class="tabcontent">
+			<table id="task-list"></table>
+
+			<input type="text" id="task-newitem"/>
+			<button id="task-add">add item</button>
+		</div>
+
+		<div id="Websites" class="tabcontent">
+			<table id="website-list"></table>
+
+			<input type="text" id="website-newitem"/>
+			<button id="website-add">add website</button>
+		</div>
+
+		<div id="Reminders" class="tabcontent">
+
+				<h3>Reminder Time Interval:</h3>
+				<input type="number" id="RemindMin", value="10"> minutes
+				
+				<h3>Snooze Length (minutes):</h3>
+				<input type="number" id="SnoozeMin", value="1"> minutes
+
+		</div>
+	</body>
+</html> 
