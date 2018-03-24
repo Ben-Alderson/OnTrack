@@ -10,10 +10,11 @@ state = "remind"
 // Number of minutes the user has been active on distracting websites
 remindTimer = 0
 
-// Set to true whenever there's activity on a distracting website.
-// Set to false each minute. If it was true, `remindTimer` will be 
-// incremented.
-hasBeenActive = false
+// A list of websites active this minute
+activeWebsites = []
+
+// An object that stores the total number of minutes spent on each website
+websiteTotals = {}
 
 // The configuration settings
 config = {
@@ -70,12 +71,13 @@ chrome.runtime.onConnect.addListener((port) => {
 				break
 
 			case "pageActivity":
-				console.log("Page Activity")
-				hasBeenActive = true
+				console.log("Page Activity " + message.website)
+				if(activeWebsites.indexOf(message.website) == -1) {
+					activeWebsites.push(message.website)
+				}
 				break
 
 			case "resetActiveTime":
-				hasBeenActive = false
 				remindTimer = 0
 				allPorts.forEach((p) => {
 					p.postMessage({action: "activityFor", time: remindTimer});
@@ -85,7 +87,6 @@ chrome.runtime.onConnect.addListener((port) => {
 			case "changeState":
 				if(state != message.value) {
 					state = message.value
-					hasBeenActive = false
 					remindTimer = 0
 					allPorts.forEach((p) => {
 						p.postMessage({action: "activityFor", time: remindTimer});
@@ -129,6 +130,37 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 	if(alarm.name !== "checkActivity") {
 		return
 	}
+
+	var hasBeenActive = false;
+	for(website of activeWebsites) {
+		console.log("Visited " + website)
+		if(config.blockList.indexOf(website) > -1) { 
+			// A blocked site was active
+			hasBeenActive = true;
+		}
+		if(websiteTotals[website] !== undefined) {
+			websiteTotals[website] += 1
+		} else {
+			websiteTotals[website] = 1
+		}
+
+		if(config.blockList.indexOf(website) > -1) { 
+			// Don't count pages that are already blocked
+			websiteTotals[website] = 0
+		}
+
+		// Add to blocked list if visited for more than 3 minutes
+		if(websiteTotals[website] >= 3) {
+			if(config.blockList.indexOf(website) == -1) {
+				console.log("Automatically blocked website: " + website)
+				config.blockList.push(website)
+				allPorts.forEach((p) => {
+					p.postMessage({action: "configChanged", newConfig: config})
+				})
+			}
+		}
+	}
+	activeWebsites = []
 
 	switch(state) {
 		case "remind":
@@ -176,8 +208,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 		case "blocking":
 			break
 	}
-
-	hasBeenActive = false
 })
 
 // Set up the page to open when we click on the extension icon
