@@ -4,7 +4,7 @@ function clearAllItems(ul) {
 	numItems = 1;
 }
 
-function addItemPreset(table, item, cb) {
+function addItemPreset(table, item, cb, indexed) {
 	
     var tr = document.createElement("tr");
 	var td_index = document.createElement("td");
@@ -15,10 +15,14 @@ function addItemPreset(table, item, cb) {
 	button.onclick = function() { 
     	cb(item);
   	};
-    td_index.appendChild(document.createTextNode(numItems.toString()));
+	if(indexed){
+		td_index.appendChild(document.createTextNode(numItems.toString()));
+		tr.appendChild(td_index);
+	}
+    
     td_item.appendChild(document.createTextNode(item));
 	td_button.appendChild(button);
-	tr.appendChild(td_index);
+	
 	tr.appendChild(td_item);
 	tr.appendChild(td_button);
 	table.appendChild(tr);
@@ -41,7 +45,7 @@ port.onMessage.addListener((message) => {
 			todos = message.newTodos
 			clearAllItems(document.querySelector("#task-list"))
 			for(todo of todos) {
-				addItemPreset(document.querySelector("#task-list"), todo, removeTodoItem)
+				addItemPreset(document.querySelector("#task-list"), todo, removeTodoItem, true)
 			}
 			break
 
@@ -50,7 +54,7 @@ port.onMessage.addListener((message) => {
 			config = message.newConfig
 			clearAllItems(document.querySelector("#website-list"))
 			for(site of config.blockList) {
-				addItemPreset(document.querySelector("#website-list"), site, removeWebsiteItem)
+				addItemPreset(document.querySelector("#website-list"), site, removeWebsiteItem, false)
 			}
 			document.querySelector("#RemindMin").value = config.remindMin
 			document.querySelector("#SnoozeMin").value = config.snoozeMin
