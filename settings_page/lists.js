@@ -1,18 +1,29 @@
+var numItems=1;
 function clearAllItems(ul) {
 	ul.innerHTML = '';
+	numItems = 1;
 }
 
-function addItemPreset(ul, item, cb) {
-    var li = document.createElement("li");
+function addItemPreset(table, item, cb) {
+	
+    var tr = document.createElement("tr");
+	var td_index = document.createElement("td");
+	var td_item = document.createElement("td");
+	var td_button = document.createElement("td");
 	var button = document.createElement("button");
 	button.innerHTML = "X";
 	button.onclick = function() { 
     	cb(item);
   	};
-    
-    li.appendChild(document.createTextNode(item));
-	li.appendChild(button);
-	ul.appendChild(li);
+    td_index.appendChild(document.createTextNode(numItems.toString()));
+    td_item.appendChild(document.createTextNode(item));
+	td_button.appendChild(button);
+	tr.appendChild(td_index);
+	tr.appendChild(td_item);
+	tr.appendChild(td_button);
+	table.appendChild(tr);
+	
+	numItems=numItems+1;
 }
 
 // Keep track of todos
