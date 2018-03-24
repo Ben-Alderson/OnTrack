@@ -13,14 +13,11 @@
 
 
 
-function clearAllItems() {
-	var ul = document.getElementById("dynamic-list");
+function clearAllItems(ul) {
 	ul.innerHTML = '';
 }
 
-function addItemPreset(item) {
-	var ul = document.getElementById("dynamic-list");
-    
+function addItemPreset(ul, item) {
     var li = document.createElement("li");
 	var button = document.createElement("button");
 	button.innerHTML = "X";
@@ -47,9 +44,9 @@ port.onMessage.addListener((message) => {
 		case "todosChanged":
 			// Fires when the todo list is changed
 			todos = message.newTodos
-			clearAllItems();
+			clearAllItems(document.querySelector("#dynamic-list"))
 			for(todo of todos) {
-				addItemPreset(todo);
+				addItemPreset(document.querySelector("#dynamic-list"), todo)
 			}
 			break
 	}
