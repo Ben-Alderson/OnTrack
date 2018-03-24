@@ -18,7 +18,7 @@ hasBeenActive = false
 // The configuration settings
 config = {
 	// The list of blocked sites
-	blockList: ["www.reddit.com", "www.youtube.com", "twitter.com"],
+	blockList: ["www.reddit.com", "www.youtube.com", "twitter.com", "www.facebook.com"],
 	remindMin: 15,
 	snoozeMin: 1
 }

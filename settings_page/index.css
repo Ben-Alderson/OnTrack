@@ -31,3 +31,8 @@
 					border: 1px solid #ccc;
 					border-top: none;
 			}
+
+			.imageRow {
+				width: 100%;
+				background-color: #d4d4d4;
+			}
