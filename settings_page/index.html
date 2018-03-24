@@ -36,6 +36,22 @@
 					border: 1px solid #ccc;
 					border-top: none;
 			}
+            
+            * {
+                box-sizing: border-box;
+            }
+
+            .imageColumn {
+                float: left;
+                width: 0%;
+                padding: 0px;
+            }
+
+            .imageRow::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
 		</style>
 		<link rel="shortcut icon" href="../icons/icon_128.png">
 		<script src="lists.js" defer></script>
@@ -43,7 +59,14 @@
 	</head>
 
 	<body>
-		<img src="logo.jpg" alt="On Track Logo">
+        <div class="imageRow">
+            <div class="imageColumn">
+                <img src="logoExtension.jpg" alt="On Track Logo" style="width:1000000px;height:67px;">
+            </div>
+            <div class="imageColumn">
+                <img src="logo.jpg" alt="On Track Logo">
+            </div>
+        </div>
         <h3><a href="mainPage.html">To-Do's</a></h3>
 		<h1>Settings</h1>
 
@@ -74,13 +97,11 @@
 		<div id="Reminders" class="tabcontent">
 
 				<h3>Reminder Time Interval:</h3>
-				<input type="number" id="RemindMin", value="10"></input> minutes
+				<input type="number" id="RemindMin", value="10"> minutes
 				
 				<h3>Snooze Length (minutes):</h3>
-				<input type="number" id="SnoozeMin", value="1"></input> minutes
+				<input type="number" id="SnoozeMin", value="1"> minutes
 
-				<h3>Time Used (minutes)</h3>
-				<input type="text" disabled id="TimeUsed"></input> minutes
 		</div>
 	</body>
 </html> 
