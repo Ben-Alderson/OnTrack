@@ -2,6 +2,8 @@
 blocking_el = undefined
 
 num_todos = undefined
+minutes = undefined
+
 isBlocking = false
 config = {blockList: []}
 
@@ -28,23 +30,55 @@ function checkBlocking() {
 		blocking_el.style["width"] = "100vw"
 		blocking_el.style["background-color"] = "rgba(0, 0, 0, 0.5)"
 		blocking_el.style["z-index"] = 10000
+
+		var popup = document.createElement("div")
+		popup.style["position"] = "fixed"
+		popup.style["transform"] = "translate(-50%, -50%)"
+		popup.style["left"] = "50%"
+		popup.style["top"] = "50%"
+		popup.style["background-color"] = "white"
+		popup.style["border-radius"] = "10px"
+		popup.style["padding"] = "1em"
+		popup.style["font-size"] = "1em"
+		blocking_el.appendChild(popup)
+
+		var minutes_el = document.createElement("span")
+		minutes_el.innerHTML = "You have been active for " + minutes + " minutes."
+		popup.appendChild(minutes_el)
+		popup.appendChild(document.createElement("br"))
+
+		var num_todos_el = document.createElement("span")
+		num_todos_el.innerHTML = "You have " + num_todos + " todos."
+		popup.appendChild(num_todos_el)
+		popup.appendChild(document.createElement("br"))
 		
-		message = document.createElement("a")
-		message.href = chrome.runtime.getURL("config_page/index.html")
-		message.addEventListener("click", (e) => {
+		var snooze = document.createElement("a")
+		snooze.innerHTML = "Snooze&nbsp;&nbsp;&nbsp;"
+		snooze.href = "javascript:void(0)"
+		snooze.addEventListener("click", (e) => {
+			e.preventDefault()
+			port.postMessage({action: "changeState", value: "snooze"})
+		})
+		popup.appendChild(snooze)
+
+		var accept = document.createElement("a")
+		accept.innerHTML = "Accept&nbsp;&nbsp;&nbsp;"
+		accept.href = chrome.runtime.getURL("config_page/index.html")
+		accept.addEventListener("click", (e) => {
 			e.preventDefault()
 			port.postMessage({action: "openTodos"})
 		})
-		message.appendChild(document.createTextNode("You have " + num_todos + " todo items."))
-		message.style["position"] = "fixed"
-		message.style["transform"] = "translate(-50%, -50%)"
-		message.style["left"] = "50%"
-		message.style["top"] = "50%"
-		message.style["background-color"] = "white"
-		message.style["border-radius"] = "10px"
-		message.style["padding"] = "1em"
-		message.style["font-size"] = "1em"
-		blocking_el.appendChild(message)
+		popup.appendChild(accept)
+
+		var idle = document.createElement("a")
+		idle.innerHTML = "Idle&nbsp;&nbsp;&nbsp;"
+		idle.href = "javascript:void(0)"
+		idle.addEventListener("click", (e) => {
+			e.preventDefault()
+			port.postMessage({action: "changeState", value: "idle"})
+		})
+		popup.appendChild(idle)
+
 		document.body.appendChild(blocking_el)
 
 		// Stop all playing video and audio
@@ -61,13 +95,18 @@ port.onMessage.addListener((message) => {
 			checkBlocking()
 			break
 
-		case "blockingChanged":
-			isBlocking = message.value
+		case "stateChanged":
+			isBlocking = message.value == "blocking"
 			checkBlocking()
 			break
 
 		case "todosChanged":
 			num_todos = message.newTodos.length
+			checkBlocking()
+			break
+
+		case "activityFor":
+			minutes = message.time
 			checkBlocking()
 			break
 	}

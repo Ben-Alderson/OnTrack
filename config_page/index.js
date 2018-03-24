@@ -29,9 +29,9 @@ port.onMessage.addListener((message) => {
 			todos_box.value = window.JSON.stringify(todos, null, 2)
 			break
 
-		case "blockingChanged":
+		case "stateChanged":
 			// Fires when blocking becomes active or inactive
-			blocking_enabled.checked = message.value
+			blocking_enabled.checked = state == "blocking"
 			break
 	}
 })
@@ -71,7 +71,11 @@ update_todos_button.addEventListener("click", () => {
 })
 
 blocking_enabled.addEventListener("change", () => {
-	port.postMessage({action: "blockingChanged", value: blocking_enabled.checked})
+	if(blocking_enabled.checked) {
+		port.postMessage({action: "changeState", value: "blocking"})
+	} else {
+		port.postMessage({action: "changeState", value: "remind"})
+	}
 })
 
 reset_timer.addEventListener("click", () => {
