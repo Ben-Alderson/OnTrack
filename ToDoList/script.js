@@ -9,52 +9,62 @@
 //ul.appendChild(li);
 //alert(li.id);
 //}
+//
 
-function addItem(){
-    var ul = document.getElementById("dynamic-list");
-    var candidate = document.getElementById("candidate");
-    var li = document.createElement("li");
-	var button = document.createElement("button");
-	li.setAttribute('id',candidate.value);
-	button.innerHTML = "X";
-	button.onclick = function() { 
-    	removeItem(candidate.value);
-  	};
-	
-    
-    li.appendChild(document.createTextNode(candidate.value));
-	li.appendChild(button);
-	
-    ul.appendChild(li);
+
+
+function clearAllItems() {
+	var ul = document.getElementById("dynamic-list");
+	ul.innerHTML = '';
 }
-
-function removeItem(item_id){
-    var ul = document.getElementById("dynamic-list");
-    var item = document.getElementById(item_id);
-    ul.removeChild(item);
-}
-
 
 function addItemPreset(item) {
-    
-	
-	 var ul = document.getElementById("dynamic-list");
+	var ul = document.getElementById("dynamic-list");
     
     var li = document.createElement("li");
 	var button = document.createElement("button");
-	li.setAttribute('id',item);
 	button.innerHTML = "X";
 	button.onclick = function() { 
     	removeItem(item);
   	};
-	
     
     li.appendChild(document.createTextNode(item));
 	li.appendChild(button);
 	ul.appendChild(li);
 }
 
-addItemPreset("Read");
-addItemPreset("another one");
+
+
+// Keep track of todos
+todos = []
+
+// Open up a connection with the background page
+port = chrome.runtime.connect()
+port.onMessage.addListener((message) => {
+	console.log(message)
+
+	switch(message.action) {
+		case "todosChanged":
+			// Fires when the todo list is changed
+			todos = message.newTodos
+			clearAllItems();
+			for(todo of todos) {
+				addItemPreset(todo);
+			}
+			break
+	}
+})
+
+function addItem() {
+	todos.push(document.getElementById("candidate").value);
+	port.postMessage({ action: "updateTodos", changes: todos });
+}
+
+function removeItem(item_id) {
+	var index = todos.indexOf(item_id);
+	todos.splice(index, 1);
+	port.postMessage({ action: "updateTodos", changes: todos });
+}
 
 document.querySelector("#add_item").addEventListener("click", addItem);
+document.querySelector("#candidate").addEventListener("keyup", (e) => { if(e.key == 13 || e.keyCode == 13) { addItem(); } });
