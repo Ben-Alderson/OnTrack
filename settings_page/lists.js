@@ -134,3 +134,8 @@ document.querySelector("#SnoozeMin").addEventListener("keyup", (e) => {
 		updateConfig("snoozeMin", document.querySelector("#SnoozeMin").value)
 	}
 })
+
+document.querySelector("#save_reminders_tab").addEventListener("click", () => {
+		updateConfig("snoozeMin", document.querySelector("#SnoozeMin").value)
+		updateConfig("remindMin", document.querySelector("#RemindMin").value)
+})
