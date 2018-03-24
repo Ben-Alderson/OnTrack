@@ -1,86 +1,81 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-/* Style the tab */
-.tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-}
+	<head>
+		<meta charset="UTF-8">
+		<style>
+			/* Style the tab */
+			.tab {
+					overflow: hidden;
+					border: 1px solid #ccc;
+					background-color: #f1f1f1;
+			}
 
-/* Style the buttons inside the tab */
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-}
+			/* Style the buttons inside the tab */
+			.tab button {
+					background-color: inherit;
+					float: left;
+					border: none;
+					outline: none;
+					cursor: pointer;
+					padding: 14px 16px;
+					transition: 0.3s;
+					font-size: 17px;
+			}
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-    background-color: #ddd;
-}
+			/* Change background color of buttons on hover */
+			.tab button:hover {
+					background-color: #ddd;
+			}
 
-/* Create an active/current tablink class */
-.tab button.active {
-    background-color: #ccc;
-}
+			/* Create an active/current tablink class */
+			.tab button.active {
+					background-color: #ccc;
+			}
 
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-}
-</style>
+			/* Style the tab content */
+			.tabcontent {
+					display: none;
+					padding: 6px 12px;
+					border: 1px solid #ccc;
+					border-top: none;
+			}
+		</style>
+		<link rel="icon" type="image/png" href="logo.png"> <!--favicon-->
+		<script src="lists.js" defer></script>
+		<script src="tabs.js" defer></script>
+	</head>
 
+	<body>
+		<img src="logo.jpg" alt="On Track Logp">
+		<h1>Settings</h1><br><br>
 
+		<!--The main menu-->
 
-</head>
+		<div class="tab">
+				<button class="tablinks" data-tabid="Tasks" id="defaultOpen">Tasks</button>
+				<button class="tablinks" data-tabid="Websites">Websites</button>
+				<button class="tablinks" data-tabid="Reminders">Reminders</button>
+		</div>
 
-<body>
+		<div id="Tasks" class="tabcontent">
+			<ul id="task-list"></ul>
 
-<img src="logo.jpg" alt="On Track Logp">
+			<input type="text" id="task-newitem"/>
+			<button id="task-add">add item</button>
+		</div>
 
+		<div id="Websites" class="tabcontent">
+				<p>Websites go here</p>
+		</div>
 
-<h1>Settings</h1><br><br>
+		<div id="Reminders" class="tabcontent">
 
+				<h3>Reminder Time Interval:</h3>
+				<input type="number" name="RemindMin", value="10"> minutes
+				
+				<h3>Snooze Length (minutes):</h3>
+				<input type="number" name="SnoozeMin", value="1"> minutes
 
-
-<!--The main menu-->
-
-<div class="tab">
-    <button class="tablinks" data-tabid="Tasks" id="defaultOpen">Tasks</button>
-    <button class="tablinks" data-tabid="Websites">Websites</button>
-    <button class="tablinks" data-tabid="Reminders">Reminders</button>
-</div>
-
-<div id="Tasks" class="tabcontent">
-    <p>Tasks go here</p>
-</div>
-
-<div id="Websites" class="tabcontent">
-    <p>Websites go here</p>
-</div>
-
-<div id="Reminders" class="tabcontent">
-
-    <h3>Reminder Time Interval:</h3>
-    <input type="number" name="RemindMin", value="10"> minutes
-    
-    <h3>Snooze Length (minutes):</h3>
-    <input type="number" name="SnoozeMin", value="1"> minutes
-
-</div>
-
-
-<script src="tabs.js" defer></script>
-
-</body>
+		</div>
+	</body>
 </html> 
