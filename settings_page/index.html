@@ -56,9 +56,9 @@
 <!--The main menu-->
 
 <div class="tab">
-    <button class="tablinks" onclick="openOption(event, 'Tasks')" id="defaultOpen">Tasks</button>
-    <button class="tablinks" onclick="openOption(event, 'Websites')">Websites</button>
-    <button class="tablinks" onclick="openOption(event, 'Reminders')">Reminders</button>
+    <button class="tablinks" data-tabid="Tasks" id="defaultOpen">Tasks</button>
+    <button class="tablinks" data-tabid="Websites">Websites</button>
+    <button class="tablinks" data-tabid="Reminders">Reminders</button>
 </div>
 
 <div id="Tasks" class="tabcontent">
@@ -80,23 +80,7 @@
 </div>
 
 
-<script>
-function openOption(event, optName) {
-    var tabIndex, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (tabIndex = 0; tabIndex < tabcontent.length; tabIndex++) {
-        tabcontent[tabIndex].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (tabIndex = 0; tabIndex < tablinks.length; tabIndex++) {
-        tablinks[tabIndex].className = tablinks[tabIndex].className.replace(" active", "");
-    }
-    document.getElementById(optName).style.display = "block";
-    event.currentTarget.className += " active";
-}
-
-document.getElementById("defaultOpen").click();
-</script>
+<script src="tabs.js" defer></script>
 
 </body>
 </html> 
