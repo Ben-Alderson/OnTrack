@@ -1,5 +1,4 @@
 function openOption(event) {
-
 		var optName = this.dataset.tabid;
     var tabIndex, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");

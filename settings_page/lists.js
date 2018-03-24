@@ -8,7 +8,6 @@ function addItemPreset(table, item, cb, indexed) {
     var tr = document.createElement("tr");
 	var td_index = document.createElement("td");
 	var td_item = document.createElement("td");
-	td_item.setAttribute("id", "list_item");
 	var td_button = document.createElement("td");
 	var button = document.createElement("button");
 	button.innerHTML = "X";
