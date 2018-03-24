@@ -1,4 +1,6 @@
-
+body{
+	padding: 16px;
+}
 			/* Style the tab */
 			.tab {
 					overflow: hidden;
@@ -35,21 +37,31 @@
 			.imageRow {
 				width: 100%;
 				background-color: #d4d4d4;
+				
 			}
+
 
 table{
 	font-size: 16px;
 	border-collapse: collapse;
+	border-style:solid;
+	background: linear-gradient(to bottom, #D3D9EA, white);
+	
 }
 td {
-    border-bottom: 1px solid #ddd;
+	padding-left: 15px;
+    border-bottom: 1px solid #1E1E1E;
 }
 tr{
 	border: 1px solid #ccc;
 }
+
+
 tr:nth-child(odd){
-	background-color: #DEE4F4;
+	border-bottom: 1px solid black;
 }
+
+
 #list_item{
 	width: 90%;
 }
