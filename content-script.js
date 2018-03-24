@@ -63,7 +63,7 @@ function checkBlocking() {
 
 		var accept = document.createElement("a")
 		accept.innerHTML = "Accept&nbsp;&nbsp;&nbsp;"
-		accept.href = chrome.runtime.getURL("config_page/index.html")
+		accept.href = chrome.runtime.getURL("settings_page/mainPage.html")
 		accept.addEventListener("click", (e) => {
 			e.preventDefault()
 			port.postMessage({action: "openTodos"})
@@ -119,16 +119,16 @@ port.onDisconnect.addListener(() => {
 function onActivity() {
 	if(!"blockList" in config) {
 		// Retry if we haven't loaded config yet
-		//console.log("Retry")
 		setTimeout(onActivity, 100)
 		return
 	}
 
 	if(!document.hasFocus()) {
-		//console.log("NoFocus")
 		// Don't log events where the user is just hovering over the window.
 	} else if(!isOnBlockList()) {
-		//console.log("NotOnBlock")
+		// Don't send messages if we aren't a distracting site
+	} else if(isBlocking) {
+		// Don't send messages while blocking is active
 	} else {
 		// Send activity notification if we're blocked
 		port.postMessage({action: "pageActivity"})

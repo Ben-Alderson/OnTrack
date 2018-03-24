@@ -5,7 +5,6 @@ function clearAllItems(ul) {
 }
 
 function addItemPreset(table, item, cb, indexed) {
-	
     var tr = document.createElement("tr");
 	var td_index = document.createElement("td");
 	var td_item = document.createElement("td");
@@ -59,6 +58,14 @@ port.onMessage.addListener((message) => {
 			document.querySelector("#RemindMin").value = config.remindMin
 			document.querySelector("#SnoozeMin").value = config.snoozeMin
 			break
+
+		case "stateChanged":
+			// Fires when the internal state of the plugin is changed
+			if(message.value == "idle") {
+				document.querySelector("#idle").checked = true
+			} else {
+				document.querySelector("#idle").checked = false
+			}
 	}
 })
 
@@ -88,6 +95,16 @@ function updateConfig(key, value) {
 	config[key] = value;
 	port.postMessage({ action: "updateConfig", changes: config });
 }
+
+function updateIdle() {
+	if(document.querySelector("#idle").checked) {
+		port.postMessage({ action: "changeState", value: "idle" });
+	} else {
+		port.postMessage({ action: "changeState", value: "remind" });
+	}
+}
+
+document.querySelector("#idle").addEventListener("change", updateIdle);
 
 document.querySelector("#website-add").addEventListener("click", addWebsiteItem);
 document.querySelector("#website-newitem").addEventListener("keyup", (e) => {

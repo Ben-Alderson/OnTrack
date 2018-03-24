@@ -31,7 +31,7 @@ port.onMessage.addListener((message) => {
 
 		case "stateChanged":
 			// Fires when blocking becomes active or inactive
-			blocking_enabled.checked = state == "blocking"
+			blocking_enabled.checked = message.value == "blocking"
 			break
 	}
 })
