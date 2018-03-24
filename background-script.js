@@ -103,7 +103,7 @@ chrome.runtime.onConnect.addListener((port) => {
 
 			case "openTodos":
 				chrome.tabs.create({
-					url: "config_page/index.html",
+					url: "settings_page/mainPage.html",
 				})
 				break
 		}
@@ -154,6 +154,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 // Set up the page to open when we click on the extension icon
 chrome.browserAction.onClicked.addListener(() => {
 	chrome.tabs.create({
-		url: "config_page/index.html",
+		url: "settings_page/index.html",
 	})
 })
