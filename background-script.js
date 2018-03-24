@@ -144,6 +144,11 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 			websiteTotals[website] = 1
 		}
 
+		if(config.blockList.indexOf(website) > -1) { 
+			// Don't count pages that are already blocked
+			websiteTotals[website] = 0
+		}
+
 		// Add to blocked list if visited for more than 3 minutes
 		if(websiteTotals[website] >= 3) {
 			if(config.blockList.indexOf(website) == -1) {
