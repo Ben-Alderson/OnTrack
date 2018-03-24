@@ -73,6 +73,11 @@ chrome.runtime.onConnect.addListener((port) => {
 				hasBeenActive = true
 				break
 
+			case "resetActiveTime":
+				hasBeenActive = false
+				activeMinutes = 0
+				break
+
 			case "blockingChanged":
 				if(isBlocking != message.value) {
 					allPorts.forEach((p) => {

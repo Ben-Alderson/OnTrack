@@ -8,6 +8,7 @@ update_todos_button = document.querySelector("#update_todos")
 status_div = document.querySelector("#status")
 error_div = document.querySelector("#errors")
 blocking_enabled = document.querySelector("#blocking_enabled")
+reset_timer = document.querySelector("#reset_timer")
 
 // Open up a connection with the background page
 port = chrome.runtime.connect()
@@ -71,4 +72,8 @@ update_todos_button.addEventListener("click", () => {
 
 blocking_enabled.addEventListener("change", () => {
 	port.postMessage({action: "blockingChanged", value: blocking_enabled.checked})
+})
+
+reset_timer.addEventListener("click", () => {
+	port.postMessage({action: "resetActiveTime"})
 })
