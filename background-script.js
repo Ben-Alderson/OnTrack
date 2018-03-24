@@ -8,7 +8,7 @@ allPorts = []
 isBlocking = false
 
 // Number of minutes the user has been active on distracting websites
-activeMinutes = 0
+remindMin = 0
 
 // Set to true whenever there's activity on a distracting website.
 // Set to false each minute. If it was true, `activityFor` will be 
@@ -19,7 +19,8 @@ hasBeenActive = false
 config = {
 	// The list of blocked sites
 	blockList: ["www.reddit.com", "www.youtube.com", "twitter.com"],
-	activeMinutes: 15,
+	remindMin: 15,
+	snoozeMin: 1,
 	disabled: false
 }
 
@@ -75,7 +76,7 @@ chrome.runtime.onConnect.addListener((port) => {
 
 			case "resetActiveTime":
 				hasBeenActive = false
-				activeMinutes = 0
+				remindMin = 0
 				break
 
 			case "blockingChanged":
@@ -124,18 +125,18 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 
 	// If hasBeenActive is set, we know that the user interacted in this minute
 	if(hasBeenActive) {
-		activeMinutes += 1
-		console.log("Active for " + activeMinutes + " minute(s)")
+		remindMin += 1
+		console.log("Active for " + remindMin + " minute(s)")
 	}
 	hasBeenActive = false
 
 	// Don't keep track of minutes if disabled
 	if(config.disabled) {
-		activeMinutes = 0
+		remindMin = 0
 	}
 
 	// Check if the timeout has been exceeded
-	if(activeMinutes >= config.activeMinutes && !isBlocking) {
+	if(remindMin >= config.remindMin && !isBlocking) {
 		isBlocking = true
 
 		allPorts.forEach((p) => {
@@ -146,7 +147,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 	let shouldStopBlocking = false
 	if(shouldStopBlocking && isBlocking) {
 		isBlocking = false
-		activeMinutes = 0
+		remindMin = 0
 	}
 })
 
