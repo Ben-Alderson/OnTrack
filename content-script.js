@@ -39,7 +39,7 @@ function checkBlocking() {
 		popup.style["background-color"] = "white"
 		popup.style["border-radius"] = "10px"
 		popup.style["padding"] = "1em"
-		popup.style["font-size"] = "1em"
+		popup.style["font-size"] = "16px"
 		blocking_el.appendChild(popup)
 
 		if(minutes !== undefined) {
@@ -53,7 +53,9 @@ function checkBlocking() {
 
 		if(num_todos !== undefined) {
 			var num_todos_el = document.createElement("span")
-			num_todos_el.innerHTML = "You have " + num_todos + " todos."
+			var todosString=num_todos.toString()
+			todosString = todosString.fontcolor("red");
+			num_todos_el.innerHTML = "You have " + todosString + " to-do's."
 			popup.appendChild(num_todos_el)
 			popup.appendChild(document.createElement("br"))
 		}
