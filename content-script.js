@@ -55,32 +55,32 @@ function checkBlocking() {
 			var num_todos_el = document.createElement("span")
 			var todosString=num_todos.toString()
 			todosString = todosString.fontcolor("red");
-			num_todos_el.innerHTML = "You have " + todosString + " to-do's."
+			num_todos_el.innerHTML = "You have " + todosString + " to-do's.<br>"
 			popup.appendChild(num_todos_el)
 			popup.appendChild(document.createElement("br"))
 		}
 		
-		var snooze = document.createElement("a")
+		var snooze = document.createElement("button")
 		snooze.innerHTML = "Snooze&nbsp;&nbsp;&nbsp;"
-		snooze.href = "javascript:void(0)"
+		//snooze.href = "javascript:void(0)"
 		snooze.addEventListener("click", (e) => {
 			e.preventDefault()
 			port.postMessage({action: "changeState", value: "snooze"})
 		})
 		popup.appendChild(snooze)
 
-		var accept = document.createElement("a")
+		var accept = document.createElement("button")
 		accept.innerHTML = "Accept&nbsp;&nbsp;&nbsp;"
-		accept.href = chrome.runtime.getURL("settings_page/mainPage.html")
+		//accept.href = chrome.runtime.getURL("settings_page/mainPage.html")
 		accept.addEventListener("click", (e) => {
 			e.preventDefault()
 			port.postMessage({action: "openTodos"})
 		})
 		popup.appendChild(accept)
 
-		var idle = document.createElement("a")
+		var idle = document.createElement("button")
 		idle.innerHTML = "Idle&nbsp;&nbsp;&nbsp;"
-		idle.href = "javascript:void(0)"
+		//idle.href = "javascript:void(0)"
 		idle.addEventListener("click", (e) => {
 			e.preventDefault()
 			port.postMessage({action: "changeState", value: "idle"})
