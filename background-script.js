@@ -35,7 +35,7 @@ chrome.storage.sync.get("config", function(new_config) {
 })
 
 // The list of things to do
-todos = []
+todos = ["Finish assignment","Write report","Complete readings","Study for test"]
 
 // Load the todos
 chrome.storage.sync.get("todos", function(new_todos) {
