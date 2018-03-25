@@ -42,17 +42,21 @@ function checkBlocking() {
 		popup.style["font-size"] = "1em"
 		blocking_el.appendChild(popup)
 
-		var minutes_el = document.createElement("span")
-        var minutsString=minutes.toString()
-        minutsString = minutsString.fontcolor("red");
-		minutes_el.innerHTML = "You have been active for " + minutsString + " minutes."
-		popup.appendChild(minutes_el)
-		popup.appendChild(document.createElement("br"))
+		if(minutes !== undefined) {
+			var minutes_el = document.createElement("span")
+			var minutesString=minutes.toString()
+			minutesString = minutesString.fontcolor("red");
+			minutes_el.innerHTML = "You have been active for " + minutesString + " minutes."
+			popup.appendChild(minutes_el)
+			popup.appendChild(document.createElement("br"))
+		}
 
-		var num_todos_el = document.createElement("span")
-		num_todos_el.innerHTML = "You have " + num_todos + " todos."
-		popup.appendChild(num_todos_el)
-		popup.appendChild(document.createElement("br"))
+		if(num_todos !== undefined) {
+			var num_todos_el = document.createElement("span")
+			num_todos_el.innerHTML = "You have " + num_todos + " todos."
+			popup.appendChild(num_todos_el)
+			popup.appendChild(document.createElement("br"))
+		}
 		
 		var snooze = document.createElement("a")
 		snooze.innerHTML = "Snooze&nbsp;&nbsp;&nbsp;"
