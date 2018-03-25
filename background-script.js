@@ -138,29 +138,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 			// A blocked site was active
 			hasBeenActive = true;
 		}
-		if(websiteTotals[website] !== undefined) {
-			websiteTotals[website] += 1
-		} else {
-			websiteTotals[website] = 1
-		}
-
-		if(config.blockList.indexOf(website) > -1) { 
-			// Don't count pages that are already blocked
-			websiteTotals[website] = 0
-		}
-
-		// Add to blocked list if visited for more than 3 minutes
-		if(websiteTotals[website] >= 3) {
-			if(config.blockList.indexOf(website) == -1) {
-				console.log("Automatically blocked website: " + website)
-				config.blockList.push(website)
-				allPorts.forEach((p) => {
-					p.postMessage({action: "configChanged", newConfig: config})
-				})
-			}
-		}
 	}
-	activeWebsites = []
 
 	switch(state) {
 		case "remind":
@@ -204,10 +182,34 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 			}
 			break
 		case "idle":
+			for(website of activeWebsites) {
+				if(websiteTotals[website] !== undefined) {
+					websiteTotals[website] += 1
+				} else {
+					websiteTotals[website] = 1
+				}
+
+				if(config.blockList.indexOf(website) > -1) { 
+					// Don't count pages that are already blocked
+					websiteTotals[website] = 0
+				}
+
+				// Add to blocked list if visited for more than 3 minutes
+				if(websiteTotals[website] >= 3) {
+					if(config.blockList.indexOf(website) == -1) {
+						console.log("Automatically blocked website: " + website)
+						config.blockList.push(website)
+						allPorts.forEach((p) => {
+							p.postMessage({action: "configChanged", newConfig: config})
+						})
+					}
+				}
+			}
 			break
 		case "blocking":
 			break
 	}
+	activeWebsites = []
 })
 
 // Set up the page to open when we click on the extension icon
