@@ -70,3 +70,13 @@ tr:hover {
 #index_item{
 	font-weight: 600;
 }
+
+#x_button{
+	background-color: inherit;
+	font-weight: 700;
+	color: #4F4F4F;
+	border: none;
+}
+#x_button:hover {
+	background-color: #F9F9F9;
+}

@@ -12,6 +12,7 @@ function addItemPreset(table, item, cb, indexed) {
 	td_item.setAttribute("id", "list_item");
 	var td_button = document.createElement("td");
 	var button = document.createElement("button");
+	button.setAttribute("id", "x_button");
 	button.innerHTML = "X";
 	button.onclick = function() { 
     	cb(item);
