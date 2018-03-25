@@ -25,7 +25,7 @@ body{
 			}
 			/* Create an active/current tablink class */
 			.tab button.active {
-					background-color: #ccc;
+					background-color: #C4C8D3;
 			}
 			/* Style the tab content */
 			.tabcontent {
@@ -43,28 +43,30 @@ body{
 
 body{
 	font-size: 16px;
+	color: #353535;
+	background: #F9F9F9;
 }
 table{
 	
 	border-collapse: collapse;
-	border-style:solid;
-	background: linear-gradient(to bottom, #D3D9EA, white);
+	background: linear-gradient(to bottom, #C4C8D3, white);
 	
 }
 td {
 	padding-left: 15px;
-    border-bottom: 1px solid #1E1E1E;
+    border-bottom: 1px solid #ddd;
 }
 tr{
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 }
 
-
-tr:nth-child(odd){
-	border-bottom: 1px solid black;
+tr:hover {
+	background-color: #B6C5D6;
 }
-
 
 #list_item{
-	width: 90%;
+	width: 80%;
+}
+#index_item{
+	font-weight: 600;
 }

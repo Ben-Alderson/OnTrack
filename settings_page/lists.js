@@ -7,6 +7,7 @@ function clearAllItems(ul) {
 function addItemPreset(table, item, cb, indexed) {
     var tr = document.createElement("tr");
 	var td_index = document.createElement("td");
+	td_index.setAttribute("id", "index_item");
 	var td_item = document.createElement("td");
 	td_item.setAttribute("id", "list_item");
 	var td_button = document.createElement("td");
@@ -16,7 +17,7 @@ function addItemPreset(table, item, cb, indexed) {
     	cb(item);
   	};
 	if(indexed){
-		td_index.appendChild(document.createTextNode(numItems.toString()));
+		td_index.appendChild(document.createTextNode(numItems.toString()+'.'));
 		tr.appendChild(td_index);
 	}
     
