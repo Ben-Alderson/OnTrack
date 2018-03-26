@@ -61,7 +61,7 @@ function checkBlocking() {
 		}
 		
 		var snooze = document.createElement("button")
-		snooze.innerHTML = "Snooze&nbsp;&nbsp;&nbsp;"
+		snooze.innerHTML = "Snooze"
 		//snooze.href = "javascript:void(0)"
 		snooze.addEventListener("click", (e) => {
 			e.preventDefault()
@@ -70,7 +70,7 @@ function checkBlocking() {
 		popup.appendChild(snooze)
 
 		var accept = document.createElement("button")
-		accept.innerHTML = "Accept&nbsp;&nbsp;&nbsp;"
+		accept.innerHTML = "Accept"
 		//accept.href = chrome.runtime.getURL("settings_page/mainPage.html")
 		accept.addEventListener("click", (e) => {
 			e.preventDefault()
@@ -79,7 +79,7 @@ function checkBlocking() {
 		popup.appendChild(accept)
 
 		var idle = document.createElement("button")
-		idle.innerHTML = "Idle&nbsp;&nbsp;&nbsp;"
+		idle.innerHTML = "Idle"
 		//idle.href = "javascript:void(0)"
 		idle.addEventListener("click", (e) => {
 			e.preventDefault()
